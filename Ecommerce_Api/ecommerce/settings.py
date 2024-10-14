@@ -92,7 +92,7 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 
 # Database settings (from .env file)
 DATABASES = {
-    'default': env.db('DATABASE_URL', default='mysql://root:jo1136@79@127.0.0.1:3306/capstone'),
+        'default': env.db('DATABASE_URL', default='mysql://root:password@localhost:3306/dbname'),
 }
 
 # Password validation
