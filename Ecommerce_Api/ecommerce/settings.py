@@ -11,6 +11,15 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
+BASE_DIR = Path(__file__).resolve().parent.parent
+import os
+import environ
+
+# Initialize environment variables
+env = environ.Env()
+
+# Read the .env file if it exists
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -20,12 +29,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-rguik64gxnyc##r-6qf7wfhm+$4$&**26qa!)m5j33ypk!qle@'
+SECRET_KEY = env('DJANGO_SECRET_KEY', default='your_default_secret_key')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# Debug mode (from .env file)
+DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = []
+
+ALLOWED_HOSTS =  ['yourdomain.com', 'www.yourdomain.com']
 
 
 # Application definition
@@ -79,15 +90,9 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+# Database settings (from .env file)
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.mysql",
-        "NAME": "capstone",
-        "USER": "root",
-        "PASSWORD": "jo1136@79",
-        "HOST": "127.0.0.1",
-        "PORT": "3306",
-    }
+    'default': env.db('DATABASE_URL', default='mysql://root:jo1136@79@127.0.0.1:3306/capstone'),
 }
 
 # Password validation
@@ -147,6 +152,39 @@ REST_FRAMEWORK = {
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=160),  # Access token is valid for 1 hour
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),      # Refresh token is valid for 1 day
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=16),  # Access token is valid for 1 hour
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),      # Refresh token is valid for 1 day
 }
+
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SECURE_SSL_REDIRECT = True  # Redirect all HTTP requests to HTTPS
+
+SESSION_COOKIE_SECURE = True  # Ensure session cookies are sent only over HTTPS
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True  # Expire session after the browser is closed
+SESSION_COOKIE_AGE = 3600  # Session expiry after 1 hour
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_USE_TLS = True
+
+
+CSP_DEFAULT_SRC = ("'self'",)
+CSP_SCRIPT_SRC = ("'self'",)
+CSP_STYLE_SRC = ("'self'",)
+CSP_IMG_SRC = ("'self'", 'data:')
+
+CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_HTTPONLY = True
+CSRF_COOKIE_SAMESITE = 'Lax'
+
+# Force all requests to be served over HTTPS
+if not DEBUG:
+    SECURE_HSTS_SECONDS = 31536000  # 1 year
+    SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+    SECURE_HSTS_PRELOAD = True  # Preload in browsers
+
