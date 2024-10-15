@@ -207,8 +207,6 @@ DATABASE_URL=<your_database_url>
 
 ```
 
-## Base URL
-
 - **Local Development URL**: `http://localhost:8000/`
 
 ---
@@ -243,8 +241,7 @@ DATABASE_URL=<your_database_url>
      }
 ```
 
-> **Note**: Copy the `access` token for authorization in subsequent requests by adding it in the Postman **Authorization** tab, choosing **Bearer Token** type and pasting the token.
-
+> **Note**: For future requests, include the access token in the Postman Authorization tab. Select Bearer Token as the type and paste the token into the field.
 ---
 
 ## API Endpoints
