@@ -1,8 +1,20 @@
-E-commerce API:
+# Ecommerce Product Api
+
+## Project Overview
+
 This project is a fully functional E-commerce Product API built with Django and Django REST Framework (DRF). The API allows users to manage products, perform CRUD operations, manage user authentication, and handle advanced features like product reviews, wishlists, and order systems. It’s designed for e-commerce applications where products can be searched, categorized, reviewed, and purchased.
 
+## Contents
+- [Features](#features)
+- [Installation](#installation)
+- [Configuration](#configuration)
+- [Usage](#usage)
+- [API Endpoints](#api-endpoints)
+- [Deployment](#deployment)
 
-Features
+
+
+## Features
 1. Product Management (CRUD)
 Create, Read, Update, Delete operations for products.
 Each product has fields like name, description, price, category, stock quantity, image URLs, and created date.
@@ -35,7 +47,7 @@ Admins can manage the stock, update product details, and handle user permissions
 9. Deployment
 Ready to be deployed on platforms like Heroku or PythonAnywhere.
 
-Installation
+## Installation
 Prerequisites
 Python 3.x
 Django 4.x
@@ -43,104 +55,233 @@ Django REST Framework
 PostgreSQL or MySQL (or SQLite for development)
 Docker (Optional for containerization)
 
-Steps
- 1 Clone the repository:
+1. **Clone the repository**:
 
-git clone https://github.com/eeyueltesfaye/Alx_Capstone_Project/.git
-cd Ecommerce_Api
+   ```bash
+   git clone https://github.com/eeyueltesfaye/Alx_Capstone_Project.git
+   cd Ecommerce_Api
+   ```
 
- 2 Create a virtual environment:
+2. **Create a virtual environment**:
 
-python -m venv .venv
+   ```bash
+   python -m venv .venv
+   ```
 
- 3 Activate the virtual environment:
+3. **Activate the virtual environment**:
 
-On Windows:
+   - On Windows:
 
-.venv\Scripts\activate
+     ```bash
+     .venv\Scripts\activate
+     ```
 
-On macOS/Linux:
+   - On macOS/Linux:
 
-source .venv/bin/activate
+     ```bash
+     source .venv/bin/activate
+     ```
 
- 4 Install dependencies:
+4. **Install the required packages**:
 
-pip install -r requirements.txt
-
- 5 Set up environment variables:
+   ```bash
+   pip install -r requirements.txt
+   ```
+5. **Set up environment variable**:
 Create a .env file in the root directory with the following keys:
 
-SECRET_KEY=<your_secret_key>
+ ```bash
+  SECRET_KEY=<your_secret_key>
 DEBUG=True
 DATABASE_URL=<your_database_url>
+   ```
+6. **Run migrations**:
 
- 6 Run migrations:
+   ```bash
+   python manage.py migrate
+   ```
+ 7. **Create a superuser for accessing the admin panel**:
 
-python manage.py migrate 
+ ```bash
+  python manage.py createsuperuser
+   ```
 
- 7 Create a superuser for accessing the admin panel:
+8. **Run the development server** 
 
-python manage.py createsuperuser
+   ```bash
+   python manage.py runserver
+   ```
 
- 8 Run the development server:
+## Configuration
 
-python manage.py runserver
+1. **Environment Variables**: Set up the required environment variables, such as `SECRET_KEY`, `DEBUG`, and database settings.
+2. **Settings**: Update the `settings.py` file to configure installed apps, middleware, and authentication backends as necessary.
+
+## Usage
+
+1. **Run the development server**:
+
+   ```bash
+   python manage.py runserver
+   ```
+
+2. **Access the API**: Open a web browser or an API client (like Postman) and navigate to:
+
+   ```web
+   http://127.0.0.1:8000/products/
+   ```
+
+3. **URL Roots**
+
+**register**: `http://127.0.0.1:8000/users/register/` # User registration
+
+**login**: `http://127.0.0.1:8000/users/login/` # User login
+
+**logout**: `http://127.0.0.1:8000/users/logout/` # User logout - Use refresh token
+
+**users**: `http://127.0.0.1:8000/users/` # View all users - Authentication required
+
+**products**: `http://127.0.0.1:8000/products/` # View all products - Authentication required
+
+**orders**: `http://127.0.0.1:8000/orders/list/` # View orders
+
+**Token**`http://127.0.0.1:8000/api/token/refresh/` # Generate JWT token
 
 
-API ENDPONINTS   
 
-User Authentication
-Registration
-Endpoint: POST /users/register/
-Description: Registers a new user.
-Request:
 
-json
 
+## API Endpoints- use Curl or Postman for Testing 
+
+```sql
+## API Endpoints
+
+| Method | Endpoint                                        | Description                                                    |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| POST   | /users/register/                                | Allows a new user to create an account.                        |
+| POST   | /users/login/                                   | Allows a user to login to their account.                       |
+| POST   | /users/logout/                                  | Allows a user to logout from their account.                    |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| POST   | /users/profiles/                                | Create a new profile for the logged-in user.                   |
+| GET    | /users/profiles/                                | Retrieve a list of all profiles. (Authentication required)     |
+| GET    | /users/profiles/{id}/                           | Retrieve a specific profile by its ID. (Authentication required)|
+| PUT    | /users/profiles/{id}/                           | Update a specific profile. (Authentication required)           |
+| DELETE | /users/profiles/{id}/                           | Delete a specific profile. (Authentication required)           |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| GET    | /products/                                      | Retrieve a list of all products.                               |
+| POST   | /products/                                      | Create a new product. (Admin Only)                             |
+| GET    | /products/{id}/                                 | Retrieve a specific product by its ID.                         |
+| PUT    | /products/{id}/                                 | Update a specific product. (Admin Only)                        |
+| DELETE | /products/{id}/                                 | Delete a specific product. (Admin Only)                        |
+| GET    | /products/?search={query}                       | Search products by name or category.                           |
+| GET    | /products/?category={category_name}             | Filter products by category.                                   |
+| GET    | /products/?stock_min={min}&stock_max={max}      | Filter products by stock availability.                         |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| POST   | /products/categories/                           | Create a new product category. (Admin Only)                    |
+| GET    | /products/categories/                           | Retrieve a list of all product categories.                     |
+| PUT    | /products/categories/{id}/                      | Update a specific product category. (Admin Only)               |
+| DELETE | /products/categories/{id}/                      | Delete a specific product category. (Admin Only)               |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| GET    | /products/wishlist/                             | Retrieve a list of all wishlisted products.                    |
+| POST   | /products/wishlist/add/                         | Add a product to the wishlist.                                 |
+| POST   | /products/wishlist/update/                      | Add or remove a product from the wishlist.                     |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| GET    | /products/{id}/reviews/list/                    | Retrieve all reviews for a specific product.                   |
+| POST   | /products/{id}/reviews/                         | Post a review for a product.                                   |
+| PUT    | /products/{product_id}/reviews/{review_id}/update/ | Update a specific review.                                      |
+| DELETE | /products/{product_id}/reviews/{review_id}/delete/ | Delete a specific review.                                      |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| POST   | /orders/create/                                 | Create a new order.                                            |
+| GET    | /orders/list/                                   | Retrieve a list of all orders.                                 |
+| GET    | /orders/{order_id}/                             | Retrieve a specific order by its ID.                           |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| POST   | /products/discounts/create/                     | Create a discount for a product. (Admin Only)                  |
+| GET    | /products/discounts/                            | Retrieve a list of all discounts.                              |
+| PUT    | /products/discounts/{id}/                       | Update a specific discount. (Admin Only)                       |
+| DELETE | /products/discounts/{id}/                       | Delete a specific discount. (Admin Only)                       |
+|--------|-------------------------------------------------|----------------------------------------------------------------|
+| POST   | /products/product-images/                       | Upload multiple images for a product.                          |
+| GET    | /products/product-images/?product_id={id}       | Retrieve all images for a specific product.                    |
+| PUT    | /products/product-images/{id}/                  | Update a specific product image.                               |
+| DELETE | /products/product-images/{id}/                  | Delete a specific product image.                               |
+
+```
+
+## Base URL
+
+- **Local Development URL**: `http://localhost:8000/`
+
+---
+
+## Authentication
+
+### User Authentication (JWT)
+
+1. **Create a new user**
+   - **Method**: `POST`
+   - **Endpoint**: `/users/register/`
+   - **Body** (JSON):
+
+```json
 {
     "email": "loz@gmail.com",
     "password": "loza90278@",
     "password_confirm": "loza90278@"
 }
-Response:
+```
 
-json
+- **Response** (JSON):
 
-{
+```json
+     {
+         "user": {
+            "email": "loz@gmail.com"
+         },
+        {
     "message": "User registered successfully!"
 }
+     }
+```
 
-Login
-Endpoint: POST /users/login/
-Description: Logs in the user and returns JWT tokens.
-Request:
+> **Note**: Copy the `access` token for authorization in subsequent requests by adding it in the Postman **Authorization** tab, choosing **Bearer Token** type and pasting the token.
 
-json
+---
 
-{
+## API Endpoints
+
+### 1. **Login**
+
+- **Method**: `POST`
+- **Endpoint**: `/users/login/`
+- **Authorization**: `Bearer <access_token>`
+- **Body** (JSON):
+
+  ```json
+  {
     "email": "loz@gmail.com",
     "password": "loza90278@"
 }
-Response:
 
-json
+- **Response** (JSON):
 
-{
+```json
+  {
     "refresh": "refresh_token_value",
     "access": "access_token_value",
     "user_id": 19,
     "email": "loz@gmail.com"
 }
+```
 
-Profiles
-Create Profile
-Endpoint: POST /users/profiles/
-Description: Creates a user profile.
-Request:
+### 2. **Creates a user profile**
 
-json
+**Note**: Authenticated Users
 
-{
+- **Method**: `POST`
+- **Endpoint**: `/users/profiles/`
+- **Authorization**: `Bearer <access_token>`
+- **Body** (JSON):
+- {
     "first_name": "abushe",
     "last_name": "tesfaye",
     "username": "abu22",
@@ -149,36 +290,29 @@ json
     "user": "19"
 }
 
-Retrieve All Profiles
-Endpoint: GET /users/profiles/
-Description: Retrieves all user profiles (authentication required).
 
-Retrieve Specific Profile
-Endpoint: GET /users/profiles/<int:pk>/
-Description: Retrieves a specific profile by profile ID.
+- **Response** (JSON):
 
-Update Profile
-Endpoint: PUT /users/profiles/<int:pk>/ or PATCH /users/profiles/<int:pk>/
-Description: Updates a specific profile.
+```json
+  {
+    "first_name": "abushe",
+    "last_name": "tesfaye",
+    "username": "abu22",
+    "address": "BOLE, LL23",
+    "country": "Ethiopia",
+    "user": "19"
+}
+```
 
-Delete Profile
-Endpoint: DELETE /users/profiles/<int:pk>/
-Description: Deletes a specific profile.
+### 3. **Create Products**
 
+- **Method**: `POST`
+- **Endpoint**: `/products/`
+- **Authorization**: `Bearer <access_token>`
+- **Body** (JSON):
 
-Product Management
-Retrieve All Products
-Endpoint: GET /products/
-Description: Retrieves a list of all products.
-
-Create Product
-Endpoint: POST /products/
-Description: Creates a new product.
-Request:
-
-json
-
-{
+  ```json
+  {
     "name": "Bluetooth Wireless Earbuds",
     "description": "Compact wireless earbuds with noise cancellation and 24-hour battery life.",
     "price": 129.99,
@@ -187,204 +321,103 @@ json
     "image_url": "https://example.com/images/bluetooth-earbuds.jpg",
     "created_by": 19
 }
-Update Product
-Endpoint: PUT /products/{id}/ or PATCH /products/{id}/
-Description: Updates a product by product ID.
-
-Delete Product
-Endpoint: DELETE /products/{id}/
-Description: Deletes a product by product ID.
 
 
-Search and Filtering
-Search Products
-Endpoint: GET /products/?search=wire
-Description: Search for products using keywords.
+- **Response** (JSON):
 
-Filter by Category
-Endpoint: GET /products/?category=elec
-Description: Filter products by category.
+```json
+ {
+    "name": "Bluetooth Wireless Earbuds",
+    "description": "Compact wireless earbuds with noise cancellation and 24-hour battery life.",
+    "price": 129.99,
+    "category": "Electronics",
+    "stock_quantity": 50,
+    "image_url": "https://example.com/images/bluetooth-earbuds.jpg",
+    "created_by": 19
+}
+```
 
-Filter by Stock Availability
-Endpoint: GET /products/?stock_min=10&stock_max=100
-Description: Filter products based on stock availability.
+### 4. **Create an Order**
 
-Categories
-Create Category
-Endpoint: POST /products/categories/
-Request:
+- **Method**: `POST`
+- **Endpoint**: `/orders/create/`
+- **Authorization**: `Bearer <access_token>`
+- **Body** (JSON):
 
-json
+  ```json
+  {
+   "product_id": 1,
+   "quantity": 2
+}
 
+
+
+- **Response** (JSON):
+
+```json
 {
-    "name": "Home Appliances",
-    "description": "Devices designed to assist in household tasks."
+   "order_id": 123,
+   "product": "Wireless Mouse",
+   "quantity": 2,
+   "total_price": 59.98,
+   "status": "pending"
 }
-Retrieve Categories
-Endpoint: GET /products/categories/
-Description: Retrieves all categories.
+```
 
-Update Category
-Endpoint: PUT /products/categories/{id}/ or PATCH /products/categories/{id}/
-Description: Updates a category.
+### 5. **Add a Product to Wishlist**
 
-Delete Category
-Endpoint: DELETE /products/categories/{id}/
-Description: Deletes a category.
+- **Method**: `POST`
+- **Endpoint**: `/products/wishlist/add/`
+- **Authorization**: `Bearer <access_token>`
+- **Body** (JSON):
 
-Wishlist
-Retrieve Wishlist
-Endpoint: GET /products/wishlist/
-Description: Retrieves the user's wishlist.
+  ```json
+  {
+   "product_id": 1
+}
 
-Add to Wishlist
-Endpoint: POST /products/wishlist/add/
-Request:
 
-json
 
+- **Response** (JSON):
+
+```json
 {
-    "product_id": 2
+   "message": "Product added to wishlist",
+   "wishlist": [
+      {
+         "product_id": 1,
+         "name": "Wireless Mouse"
+      }
+   ]
 }
-Update Wishlist (Add/Remove)
-Endpoint: POST /products/wishlist/update/
-Request:
+```
+### 6.Pagination
+By default, API responses are paginated. You can control pagination using the query parameters:
 
-json
-
-{
-    "product_id": 3,
-    "action": "add"  // or "remove"
-}
+?page=1: To get the first page
+?page_size=10: To set the number of results per page
 
 
-Reviews
-Retrieve Product Reviews
-Endpoint: GET /products/{id}/reviews/list/
-Description: Retrieves all reviews for a specific product.
+### 7.Advanced Filtering
+You can filter products using query parameters such as price range, category, or availability.
 
-Post a Review
-Endpoint: POST /products/{id}/reviews/
-Request:
+Example URL to filter products by category: GET /products/?category=Electronics
+## Additional Features
 
-json
+### Security Recommendations:
+- Set DEBUG=False in production.
+- Use a secure and random SECRET_KEY.
+- Ensure database credentials are stored securely.
+- Set appropriate JWT token lifetimes:
+## Deployment
 
-{
-    "rating": "5",
-    "comment": "Best Product"
-}
-Update Review
-Endpoint: PUT /products/{product_id}/reviews/{review_id}/update/
-
-Delete Review
-Endpoint: DELETE /products/{product_id}/reviews/{review_id}/delete/
-
-Orders
-Create Order
-Endpoint: POST /orders/create/
-Request:
-
-json
-
-{
-    "items": [
-        {
-            "product": 3,
-            "quantity": 2
-        }
-    ]
-}
-Response:
-
-json
-
-{
-    "message": "Order created successfully!",
-    "order_id": 10
-}
-Retrieve Orders
-Endpoint: GET /orders/list/
-Description: Retrieves all orders.
-
-Retrieve Specific Order
-Endpoint: GET /orders/{order_Id}/
-Description: Retrieves a specific order by its ID.
-
-Discounts
-Create Discount
-Endpoint: POST /products/discounts/create/
-Request:
-
-json
-
-{
-    "product_id": 1,
-    "discount_percentage": 20,
-    "start_date": "2024-10-10T00:00:00Z",
-    "end_date": "2024-10-20T23:59:59Z"
-}
-Retrieve Discounts
-Endpoint: GET /products/discounts/
-
-Update Discount
-Endpoint: PUT /products/discounts/update/{id}/
-
-Delete Discount
-Endpoint: DELETE /products/discounts/delete/{id}/
-
-Upload Multiple Images
-Upload Images
-Endpoint: POST /products/product-images/
-Request:
-
-json
-
-{
-    "product_id": 3,
-    "image_urls": [
-        "https://example.com/image3.jpg",
-        "https://example.com/image4.jpg"
-    ]
-}
-Get All Images for a Product
-Endpoint: GET /products/product-images/?product_id=<product_id>
-
-Update an Image
-Endpoint: PUT /products/product-images/{id}/
-
-Delete an Image
-Endpoint: DELETE /products/product-images/{id}/
-
-Admin Access
-After creating the superuser, you can access the Django admin panel to manage products, orders, users, and more.
-Admin panel URL: /admin/
-
-This API documentation provides clear examples and JSON payloads for interacting with the endpoints. Please refer to each section to see the exact details required for your requests.
-
-
-Security Recommendations:
-
-Set DEBUG=False in production.
-Use a secure and random SECRET_KEY.
-Ensure database credentials are stored securely.
-Set appropriate JWT token lifetimes:
-
-SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=15),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
-}
-
-
-Deployment
-
- 1 Build and run the app with Docker(Optional):
-bash
+1 Build and run the app with Docker(Optional):
+bash:
+```bash
 docker-compose up --build
-
- 2 Heroku or pythonanywhere
+```
+2  2 Heroku or pythonanywhere
 Deploy the app on Heroku or pythonanywhere by following the official guide.
 
-
-
-Authors
-Eyuel Tesfaye 
+## Authors
+ Eyuel Tesfaye 
