@@ -26,7 +26,7 @@ SECRET_KEY = 'mdiAb8UTNc3O5dJSwhOrToXs2ZPVdBwmHAZCXtQiSH4Qmw7tARmaazfMqANxI0kj_y
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS =  ['yourdomain.com', 'www.yourdomain.com']
+ALLOWED_HOSTS =  []
 
 
 # Application definition
@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'ecommerce.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.mysql",
-        "NAME": "capstone",
+        "NAME": "db",
         "USER": "root",
-        "PASSWORD": "jo1136@79",
+        "PASSWORD": "password",
         "HOST": "127.0.0.1",
         "PORT": "3306",
     }
