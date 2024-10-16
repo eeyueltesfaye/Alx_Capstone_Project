@@ -186,7 +186,7 @@ DATABASE_URL=<your_database_url>
 | POST   | /products/wishlist/add/                         | Add a product to the wishlist.                                 |
 | POST   | /products/wishlist/update/                      | Add or remove a product from the wishlist.                     |
 |--------|-------------------------------------------------|----------------------------------------------------------------|
-| GET    | /products/{id}/reviews/list/                    | Retrieve all reviews for a specific product.                   |
+| GET    | /products/{id}/reviews/                   |       Retrieve all reviews for a specific product.                   |
 | POST   | /products/{id}/reviews/                         | Post a review for a product.                                   |
 | PUT    | /products/{product_id}/reviews/{review_id}/update/ | Update a specific review.                                      |
 | DELETE | /products/{product_id}/reviews/{review_id}/delete/ | Delete a specific review.                                      |
